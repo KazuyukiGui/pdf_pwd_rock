@@ -194,9 +194,10 @@ class PDFLockerApp:
 
         self.drop_label = ttk.Label(
             self.drop_frame,
-            text="ここにPDFファイルをドラッグ&ドロップ\nまたは下のボタンでファイルを選択",
+            text="📁 ここをクリックしてPDFファイルを選択\n\nまたはファイルをドラッグ&ドロップ",
             justify=tk.CENTER,
-            anchor=tk.CENTER
+            anchor=tk.CENTER,
+            font=("Helvetica", 11)
         )
         self.drop_label.pack(expand=True, fill=tk.BOTH, pady=30)
 
@@ -256,10 +257,18 @@ class PDFLockerApp:
 
     def _setup_drag_drop(self):
         """ドラッグ&ドロップの設定"""
+        # ドロップエリアとラベルをクリック可能にする（ファイル選択ダイアログを開く）
+        self.drop_frame.bind('<Button-1>', lambda e: self._select_files())
+        self.drop_label.bind('<Button-1>', lambda e: self._select_files())
+
+        # カーソルを変更してクリック可能であることを示す
+        self.drop_frame.config(cursor="hand2")
+        self.drop_label.config(cursor="hand2")
+
         if not DND_AVAILABLE:
             # tkinterdnd2が利用できない場合はドラッグ&ドロップ無効
             self.drop_label.config(
-                text="ファイル選択ボタンをクリックしてPDFを選択\n（ドラッグ&ドロップはtkinterdnd2が必要です）"
+                text="ここをクリックしてPDFファイルを選択\n\n📁 または下のボタンでファイルを選択"
             )
             return
 
@@ -291,7 +300,7 @@ class PDFLockerApp:
         """ドラッグがエリアから出た時のビジュアルフィードバック"""
         self.drop_frame.config(relief="solid")
         self.drop_label.config(
-            text="ここにPDFファイルをドラッグ&ドロップ\nまたは下のボタンでファイルを選択"
+            text="📁 ここをクリックしてPDFファイルを選択\n\nまたはファイルをドラッグ&ドロップ"
         )
         return event.action
 
@@ -300,7 +309,7 @@ class PDFLockerApp:
         # ビジュアルを元に戻す
         self.drop_frame.config(relief="solid")
         self.drop_label.config(
-            text="ここにPDFファイルをドラッグ&ドロップ\nまたは下のボタンでファイルを選択"
+            text="📁 ここをクリックしてPDFファイルを選択\n\nまたはファイルをドラッグ&ドロップ"
         )
 
         # ドロップされたファイルを解析
