@@ -14,11 +14,33 @@ from pathlib import Path
 from typing import Optional, List
 import threading
 
+
+def _setup_tkdnd_path():
+    """PyInstallerでバンドルされた場合にtkdndのパスを設定"""
+    if getattr(sys, 'frozen', False):
+        # PyInstallerでバンドルされた実行ファイルの場合
+        bundle_dir = getattr(sys, '_MEIPASS', os.path.dirname(os.path.abspath(__file__)))
+        # tkinterdnd2のパスを環境変数に追加
+        tkdnd_path = os.path.join(bundle_dir, 'tkinterdnd2', 'tkdnd')
+        if os.path.exists(tkdnd_path):
+            os.environ['TKDND_LIBRARY'] = tkdnd_path
+        # 代替パス（Windowsの場合）
+        tkdnd_path_alt = os.path.join(bundle_dir, 'tkdnd')
+        if os.path.exists(tkdnd_path_alt):
+            os.environ['TKDND_LIBRARY'] = tkdnd_path_alt
+
+
+# PyInstallerの場合、tkdndパスを先に設定
+_setup_tkdnd_path()
+
 # tkinterdnd2のインポート（ドラッグ&ドロップ機能）
 try:
     from tkinterdnd2 import TkinterDnD, DND_FILES
     DND_AVAILABLE = True
 except ImportError:
+    DND_AVAILABLE = False
+except Exception:
+    # その他のエラー（DLLロードエラーなど）
     DND_AVAILABLE = False
 
 # pypdfのインポート

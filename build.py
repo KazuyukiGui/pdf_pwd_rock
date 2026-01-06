@@ -92,8 +92,12 @@ def build_simple():
         "--exclude-module", "pandas",
         "--exclude-module", "scipy",
         "--exclude-module", "PIL",
-        # tkinterdnd2を含める
+        # tkinterdnd2を含める（データとバイナリ両方）
         "--collect-all", "tkinterdnd2",
+        "--collect-data", "tkinterdnd2",
+        # 隠しインポート
+        "--hidden-import", "tkinterdnd2",
+        "--hidden-import", "tkinterdnd2.TkinterDnD",
         "pdf_locker.py"
     ]
     result = subprocess.run(cmd, check=True)
