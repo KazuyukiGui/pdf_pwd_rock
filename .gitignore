@@ -52,3 +52,9 @@ htmlcov/
 
 # Logs
 *.log
+
+# Security-sensitive documentation (keep private)
+ANTIVIRUS_FALSE_POSITIVE_SOLUTIONS.md
+IMPLEMENTATION_CHECKLIST.md
+installer_setup.iss
+sign_executable.py
