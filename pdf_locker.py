@@ -18,6 +18,11 @@ AES-256暗号化を使用してPDFファイルにパスワード保護を追加�
 - Word文書 (.docx)
 - Excel表 (.xlsx)
 - PowerPoint資料 (.pptx)
+
+Copyright (c) 2024-2026 KazuyukiGui
+Licensed under the Elastic License 2.0
+
+商用利用には有料ライセンスが必要です。詳細はLICENSEファイルをご確認ください。
 """
 
 import os
